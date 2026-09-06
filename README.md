@@ -240,64 +240,6 @@ Firebase Console
 → Sign-in providers
 → Google
 
-## 🔑 Gemini API Configuration
-
-The Gemini API key must not be placed directly into frontend code.
-
-For local development, create a .env file:
-
-GEMINI_API_KEY="YOUR_GEMINI_API_KEY"
-
-The .env file should remain local and must not be committed to GitHub.
-
-The repository includes an .env.example file containing placeholders.
-
-## 🛡️ Production Secret Management
-
-For production deployment, store the Gemini API key in Google Cloud Secret Manager.
-
-Create the secret:
-
-gcloud secrets create GEMINI_API_KEY   --replication-policy="automatic"
-
-Add the API key:
-
-echo -n "YOUR_GEMINI_API_KEY" |   gcloud secrets versions add GEMINI_API_KEY   --data-file=-
-
-Grant Cloud Run permission to access the secret:
-
-PROJECT_NUMBER=$(gcloud projects describe   $(gcloud config get-value project)   --format='value(projectNumber)')
-
-gcloud secrets add-iam-policy-binding GEMINI_API_KEY   --member="serviceAccount:${PROJECT_NUMBER}-compute@developer.gserviceaccount.com"   --role="roles/secretmanager.secretAccessor"
-
-## 💻 Local Development
-
-Start the application:
-
-npm run dev
-
-The development server runs on:
-
-http://localhost:3000
-
-Verify the project:
-
-npm run lint
-npm run build
-
-☁️ Google Cloud Run Deployment
-
-ReflectAI is deployed as a containerized application on Google Cloud Run.
-
-Build and deploy:
-
-gcloud run deploy reflectai   --source .   --region us-west1   --platform managed   --allow-unauthenticated   --set-secrets GEMINI_API_KEY=GEMINI_API_KEY:latest   --port 3000
-
-Current deployment:
-
-Service: reflectai
-Region: us-west1
-
 ## 🤖 Gemini & AI Features
 
 ReflectAI uses Google's Gemini models through the @google/genai SDK.
@@ -318,20 +260,7 @@ Allows authenticated users to ask questions across their own saved reflections.
 
 User data is scoped before being supplied to AI processing. ReflectAI does not intentionally send another user's private journal data to Gemini.
 
-## 🧠 AI Model Resilience
-
-The backend includes a fallback strategy for model availability and transient API failures.
-
-The application can fall back between configured Gemini models when supported errors such as:
-
-503 UNAVAILABLE
-429 RESOURCE_EXHAUSTED
-
-occur.
-
-This helps maintain application availability during temporary model or quota issues.
-
-🧪 Reproducing the Application
+## 🧪 Reproducing the Application
 
 A new developer can reproduce the application by following these steps:
 
