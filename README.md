@@ -55,7 +55,7 @@ Ask questions across your own saved reflections to discover recurring themes, pa
 
 Attach photos directly to journal entries to preserve the visual side of a memory.
 
-###📍 Remember the Place
+### 📍 Remember the Place
 
 Add a meaningful location to a reflection and connect an experience with where it happened.
 
@@ -63,75 +63,13 @@ Add a meaningful location to a reflection and connect an experience with where i
 
 Turn journal content and photos into visual memory cards displayed through a carousel. Users can revisit, download, and share their memories.
 
-###📱 Responsive & Installable
+### 📱 Responsive & Installable
 
 ReflectAI works across desktop, tablet, and mobile devices and supports an installable PWA experience.
 
 ###🔐 Private by Design
 
 Journal entries, interactions, and photos are scoped to the authenticated Firebase user. Users cannot access another user's private journal data.
-
-##🏗️ Architecture & Technology Stack
-
-Component
-
-Technology
-
-Purpose
-
-Frontend
-
-React 19 + Vite + Tailwind CSS
-
-Journaling interface, dashboard, history, AI interactions
-
-Backend
-
-Node.js + Express
-
-Server-side API layer and Gemini request handling
-
-Authentication
-
-Firebase Authentication
-
-Google Sign-In and user identity
-
-Database
-
-Cloud Firestore
-
-Private journal entries, interactions, and metadata
-
-File Storage
-
-Firebase Cloud Storage
-
-User-scoped journal photos
-
-AI
-
-Google Gemini via @google/genai
-
-Reflection conversations and AI insights
-
-Deployment
-
-Google Cloud Run
-
-Production application hosting
-
-Secrets
-
-Google Cloud Secret Manager / Environment Variables
-
-Secure Gemini API credential management
-
-Development
-
-Google AI Studio
-
-Application development and Gemini integration
 
 ## 🔄 Application Flow
 
