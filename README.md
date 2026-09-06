@@ -1,12 +1,31 @@
-ReflectAI — AI Journal & Reflection Assistant
+📰 ReflectAI — AI Journal & Reflection Assistant
 
-Write. Reflect. Grow.
+<p align="center">
+  <strong>Write. Reflect. Grow.</strong>
+</p>
+
+<p align="center">
+  A private AI-powered space to capture thoughts, preserve memories, and discover new perspectives.
+</p>
+
+<p align="center">
+  <a href="https://reflectai-app.ai.studio/">✨ Live Demo</a>
+  ·
+  <a href="https://github.com/ZiyadBin/personal-gemini-journal">💻 Source Code</a>
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=white" alt="React 19">
+  <img src="https://img.shields.io/badge/Gemini-AI-4285F4?logo=google&logoColor=white" alt="Gemini AI">
+  <img src="https://img.shields.io/badge/Firebase-Auth%20%7C%20Firestore%20%7C%20Storage-FFCA28?logo=firebase&logoColor=black" alt="Firebase">
+  <img src="https://img.shields.io/badge/Cloud%20Run-Deployed-4285F4?logo=googlecloud&logoColor=white" alt="Google Cloud Run">
+</p>
 
 ReflectAI is a private, AI-powered journaling and reflection application that combines personal writing, memories, photos, locations, and Gemini-powered conversations into one connected experience.
 
 Instead of simply storing journal entries, ReflectAI helps users write about their experiences, reflect on them, discover patterns across their journal, and turn meaningful moments into visual memories.
 
-🚀 Live Application
+🌷 Live Application
 
 Live Demo:
 https://reflectai-app.ai.studio/
@@ -14,7 +33,7 @@ https://reflectai-app.ai.studio/
 Cloud Run Deployment:
 https://reflectai-717152489335.us-west1.run.app
 
-✨ Key Features
+💫 Key Features
 
 ✍️ Write & Reflect
 
@@ -462,7 +481,7 @@ Google Cloud Run
 
 Google Cloud Secret Manager
 
-📹 Project Demonstration
+🎬 Project Demonstration
 
 A video walkthrough demonstrates the complete ReflectAI experience, including:
 
@@ -507,6 +526,19 @@ dev-tutorial=cloud-run-ai-challenge
 Hashtag:
 
 #AccelerateAIwithCloudRun
+
+🌱 The Idea
+
+ReflectAI is built around a simple thought:
+
+Journaling shouldn't end when you finish writing.
+
+It can help you revisit a moment, understand what you felt, notice patterns over time, and preserve the memories that matter.
+
+<p align="center">
+  <strong>ReflectAI · Your thoughts. A new perspective.</strong><br>
+  <sub>Built for the Google Gen AI Academy APAC Edition — Cohort 3</sub>
+</p>
 
 📄 License
 
