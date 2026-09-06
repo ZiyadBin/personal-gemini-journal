@@ -184,85 +184,9 @@ Deploy:
 
 firebase deploy --only storage
 
-## ⚙️ Configuration & Reproduction
-
-1. Prerequisites
-
-Install:
-
-Node.js
-
-npm
-
-Firebase CLI
-
-Google Cloud CLI
-
-Authenticate with Google Cloud:
-
-gcloud auth login
-
-Set your project:
-
-gcloud config set project YOUR_PROJECT_ID
-
-2. Enable Required Google Cloud APIs
-
-gcloud services enable   run.googleapis.com   secretmanager.googleapis.com   firestore.googleapis.com   identitytoolkit.googleapis.com
-
-3. Clone the Repository
-
-git clone https://github.com/ZiyadBin/personal-gemini-journal.git
-cd personal-gemini-journal
-
-4. Install Dependencies
-
-npm install
-
-5. Configure Firebase
-
-Create/configure a Firebase project with:
-
-Firebase Authentication
-
-Google Sign-In provider
-
-Cloud Firestore
-
-Firebase Cloud Storage
-
-Configure the Firebase web application credentials used by the frontend.
-
-Enable Google Sign-In under:
-
-Firebase Console
-→ Authentication
-→ Sign-in providers
-→ Google
-
-## 🤖 Gemini & AI Features
-
-ReflectAI uses Google's Gemini models through the @google/genai SDK.
-
-Gemini powers:
-
-Reflection Companion
-
-Provides contextual responses based on the user's current journal conversation.
-
-AI Insights
-
-Analyzes an individual journal reflection and produces structured insights.
-
-Ask ReflectAI
-
-Allows authenticated users to ask questions across their own saved reflections.
-
-User data is scoped before being supplied to AI processing. ReflectAI does not intentionally send another user's private journal data to Gemini.
-
 ## 🧪 Reproducing the Application
 
-A new developer can reproduce the application by following these steps:
+A developer can reproduce the application by following these steps:
 
 1. Clone the repository
         ↓
@@ -287,6 +211,26 @@ A new developer can reproduce the application by following these steps:
 11. Configure Secret Manager for production
         ↓
 12. Deploy to Cloud Run
+
+## 🤖 Gemini & AI Features
+
+ReflectAI uses Google's Gemini models through the @google/genai SDK.
+
+Gemini powers:
+
+Reflection Companion
+
+Provides contextual responses based on the user's current journal conversation.
+
+AI Insights
+
+Analyzes an individual journal reflection and produces structured insights.
+
+Ask ReflectAI
+
+Allows authenticated users to ask questions across their own saved reflections.
+
+User data is scoped before being supplied to AI processing. ReflectAI does not intentionally send another user's private journal data to Gemini.
 
 ## 🌱 The Idea
 
