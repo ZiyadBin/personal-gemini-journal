@@ -1,4 +1,4 @@
-📰 ReflectAI — AI Journal & Reflection Assistant
+# 📰 ReflectAI — AI Journal & Reflection Assistant
 
 <p align="center">
   <strong>Write. Reflect. Grow.</strong>
