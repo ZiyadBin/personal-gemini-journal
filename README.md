@@ -14,6 +14,7 @@ The system strictly enforces user data isolation through owner-bound Firestore s
 | **Backend Service** | Express 4.x (Node.js ESM/CJS) | Server-side API proxy shielding `GEMINI_API_KEY`, request validation, and Vite middleware. |
 | **User Identity** | Firebase Authentication | Secure Federated Identity via Google Sign-In with zero client-side password handling. |
 | **Backend Database** | Cloud Firestore | Isolated document storage for multi-turn user reflections, dialogues, and AI summaries. |
+| **Cloud Storage** | Firebase Cloud Storage | Private, user-scoped object storage for visual memory photos (`users/{uid}/reflections/...`). |
 | **AI Processing Engine** | Gemini 3.6 Flash (`@google/genai`) | Empathetic reflection companion and structured insight synthesis with fallback ladder. |
 | **Secret Management** | Google Cloud Secret Manager / Env Vars | Secure credential injection preventing token leakage. |
 
@@ -65,6 +66,41 @@ service cloud.firestore {
 ### Deploy Rules via Firebase CLI
 ```bash
 firebase deploy --only firestore:rules
+```
+
+---
+
+## 2.1 Firebase Cloud Storage Security Configuration
+
+ReflectAI persists visual memory photos in private Firebase Cloud Storage. Photos are strictly user-scoped and reflection-scoped:
+`users/{userId}/reflections/{reflectionId}/photos/{photoId}`
+
+Firestore documents store **zero raw bytes, zero base64, and zero blob strings**, maintaining only lightweight metadata references.
+
+### `storage.rules`
+```javascript
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+
+    match /users/{userId}/reflections/{reflectionId}/photos/{photoId} {
+      allow read: if request.auth != null && request.auth.uid == userId;
+      allow write: if request.auth != null
+                   && request.auth.uid == userId
+                   && request.resource.size < 15 * 1024 * 1024
+                   && request.resource.contentType.matches('image/.*');
+      allow delete: if request.auth != null && request.auth.uid == userId;
+    }
+  }
+}
+```
+
+### Deploy Storage Rules
+```bash
+firebase deploy --only storage
 ```
 
 ---

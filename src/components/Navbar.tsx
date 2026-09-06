@@ -1,10 +1,21 @@
 import React from "react";
-import { Sparkles, Plus, LogOut, ShieldCheck, Menu, User as UserIcon } from "lucide-react";
-import { AuthUserState } from "../types";
+import {
+  Plus,
+  LogOut,
+  Menu,
+  User as UserIcon,
+  LayoutDashboard,
+  BookOpen,
+  Sparkles,
+} from "lucide-react";
+import { AuthUserState, AppView } from "../types";
 import { logOut } from "../lib/firebase";
+import { ReflectLogo, ReflectWordmark } from "./ReflectLogo";
 
 interface NavbarProps {
   user: AuthUserState;
+  activeView: AppView;
+  onChangeView: (view: AppView) => void;
   onNewReflection: () => void;
   onToggleSidebar?: () => void;
   isSaving?: boolean;
@@ -12,9 +23,10 @@ interface NavbarProps {
 
 export const Navbar: React.FC<NavbarProps> = ({
   user,
+  activeView,
+  onChangeView,
   onNewReflection,
   onToggleSidebar,
-  isSaving,
 }) => {
   const handleSignOut = async () => {
     try {
@@ -25,75 +37,95 @@ export const Navbar: React.FC<NavbarProps> = ({
   };
 
   return (
-    <nav id="app-navbar" className="border-b border-zinc-800 bg-zinc-950/90 backdrop-blur-md sticky top-0 z-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
-        {/* Left branding & mobile toggle */}
-        <div className="flex items-center gap-3">
-          {onToggleSidebar && (
-            <button
-              id="toggle-sidebar-btn"
-              onClick={onToggleSidebar}
-              aria-label="Toggle history menu"
-              className="md:hidden p-2 text-zinc-400 hover:text-zinc-100 rounded-lg hover:bg-zinc-800/60 transition-colors"
-            >
-              <Menu className="w-5 h-5" />
-            </button>
-          )}
-
-          <div className="flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-xl bg-amber-500/15 border border-amber-500/30 text-amber-400 flex items-center justify-center font-bold shadow-xs">
-              <Sparkles className="w-4 h-4 text-amber-400" />
-            </div>
-            <div>
-              <span className="font-semibold text-zinc-100 text-base leading-none block">
-                ReflectAI
-              </span>
-              <span className="text-[11px] text-zinc-400 font-normal block mt-0.5">
-                Gemini &bull; Firestore
-              </span>
-            </div>
-          </div>
-
-          {/* Privacy badge */}
-          <div className="hidden lg:flex items-center gap-1.5 ml-4 px-2.5 py-1 rounded-full bg-zinc-900 border border-zinc-800 text-zinc-400 text-[11px] font-medium">
-            <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-            <span>Isolated Firestore Storage</span>
+    <nav
+      id="app-navbar"
+      className="border-b border-[#e9e6f0] bg-white/95 backdrop-blur-md sticky top-0 z-20 shadow-[0_1px_2px_rgba(0,0,0,0.02)]"
+    >
+      <div className="w-full px-4 sm:px-6 h-14 flex items-center justify-between gap-2">
+        {/* Left branding */}
+        <div className="flex items-center gap-3 shrink-0">
+          <div
+            onClick={() => onChangeView("journal")}
+            className="flex items-center gap-2.5 cursor-pointer"
+            title="Go to My Journal"
+          >
+            <ReflectLogo size={30} />
+            <ReflectWordmark size="md" showTagline={false} theme="light" />
           </div>
         </div>
 
-        {/* Right Actions */}
-        <div className="flex items-center gap-3">
-          {/* New reflection trigger */}
+        {/* Center: Main View Navigation (1. My Journal, 2. + Button, 3. Ask ReflectAI) */}
+        <div className="hidden sm:flex items-center gap-1.5 bg-slate-100/90 p-1 rounded-2xl border border-slate-200/80 shadow-2xs">
+          {/* 1. My Journal */}
           <button
-            id="nav-new-reflection-btn"
-            onClick={onNewReflection}
-            className="flex items-center gap-1.5 px-3.5 py-1.5 bg-amber-500 hover:bg-amber-400 text-zinc-950 text-xs sm:text-sm font-semibold rounded-lg shadow-xs transition active:scale-[0.98]"
+            id="nav-tab-my-journal"
+            type="button"
+            onClick={() => onChangeView("journal")}
+            className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs transition font-medium ${
+              activeView === "journal"
+                ? "bg-white text-slate-900 shadow-xs font-semibold"
+                : "text-slate-600 hover:text-slate-900 hover:bg-white/60"
+            }`}
           >
-            <Plus className="w-4 h-4" />
-            <span>New Reflection</span>
+            <BookOpen className="w-3.5 h-3.5 text-slate-700" />
+            <span>My Journal</span>
           </button>
 
+          {/* 2. Middle + Button */}
+          <button
+            id="nav-tab-middle-plus"
+            type="button"
+            onClick={onNewReflection}
+            className="flex items-center gap-1 px-3 py-1.5 rounded-xl text-xs font-semibold bg-gradient-to-r from-sky-500 via-blue-600 to-indigo-600 hover:from-sky-400 hover:via-blue-500 hover:to-indigo-500 text-white shadow-xs transition active:scale-95 group"
+            title="Write New Reflection"
+          >
+            <Plus className="w-3.5 h-3.5 stroke-[2.5]" />
+            <span>New</span>
+          </button>
+
+          {/* 3. Ask ReflectAI (AI Overview) */}
+          <button
+            id="nav-tab-ask-reflectai"
+            type="button"
+            onClick={() => onChangeView("explore")}
+            className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs transition font-medium ${
+              activeView === "explore"
+                ? "bg-white text-indigo-700 shadow-xs font-semibold"
+                : "text-slate-600 hover:text-indigo-900 hover:bg-white/60"
+            }`}
+          >
+            <Sparkles className="w-3.5 h-3.5 text-indigo-500" />
+            <span>Ask ReflectAI</span>
+          </button>
+        </div>
+
+        {/* Right Actions: User profile and sign out */}
+        <div className="flex items-center gap-2.5 shrink-0">
           {/* User profile item */}
-          <div className="flex items-center gap-2.5 pl-2 border-l border-zinc-800">
+          <div className="flex items-center gap-2">
             {user.photoURL ? (
               <img
                 src={user.photoURL}
                 alt={user.displayName || "User avatar"}
-                className="w-8 h-8 rounded-full border border-zinc-700 object-cover"
+                className="w-7 h-7 rounded-full border border-slate-200 object-cover"
                 referrerPolicy="no-referrer"
               />
             ) : (
-              <div className="w-8 h-8 rounded-full bg-zinc-800 border border-zinc-700 flex items-center justify-center text-zinc-300 text-xs font-semibold">
-                {user.displayName ? user.displayName.charAt(0).toUpperCase() : <UserIcon className="w-4 h-4" />}
+              <div className="w-7 h-7 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-700 text-xs font-semibold">
+                {user.displayName ? (
+                  user.displayName.charAt(0).toUpperCase()
+                ) : (
+                  <UserIcon className="w-3.5 h-3.5" />
+                )}
               </div>
             )}
 
-            <div className="hidden sm:block text-left">
-              <p className="text-xs font-medium text-zinc-200 leading-tight truncate max-w-[130px]">
-                {user.displayName || (user.isAnonymous ? "Guest Explorer" : "User")}
+            <div className="hidden lg:block text-left">
+              <p className="text-xs font-medium text-slate-900 leading-tight truncate max-w-[110px]">
+                {user.displayName || (user.isAnonymous ? "Guest" : "User")}
               </p>
-              <p className="text-[10px] text-zinc-400 truncate max-w-[130px]">
-                {user.email || (user.isAnonymous ? "Local Session" : "Authenticated")}
+              <p className="text-[10px] text-slate-400 truncate max-w-[110px]">
+                {user.email || (user.isAnonymous ? "Local" : "Auth")}
               </p>
             </div>
 
@@ -103,9 +135,9 @@ export const Navbar: React.FC<NavbarProps> = ({
               onClick={handleSignOut}
               title="Sign Out"
               aria-label="Sign Out"
-              className="p-1.5 text-zinc-400 hover:text-rose-400 hover:bg-rose-950/40 rounded-lg transition-colors ml-1"
+              className="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-xl transition-colors ml-0.5"
             >
-              <LogOut className="w-4 h-4" />
+              <LogOut className="w-3.5 h-3.5" />
             </button>
           </div>
         </div>

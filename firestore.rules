@@ -6,6 +6,10 @@ service cloud.firestore {
 
       match /reflections/{reflectionId} {
         allow read, write: if request.auth != null && request.auth.uid == userId;
+
+        match /photos/{photoId} {
+          allow read, write: if request.auth != null && request.auth.uid == userId;
+        }
       }
 
       match /interactions/{interactionId} {

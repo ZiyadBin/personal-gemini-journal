@@ -13,6 +13,7 @@ import {
   Firestore,
   enableIndexedDbPersistence,
 } from "firebase/firestore";
+import { getStorage, FirebaseStorage } from "firebase/storage";
 import firebaseConfig from "../../firebase-applet-config.json";
 
 // Initialize Firebase App singleton
@@ -27,6 +28,12 @@ googleProvider.setCustomParameters({ prompt: "select_account" });
 export const db: Firestore = firebaseConfig.firestoreDatabaseId
   ? getFirestore(app, firebaseConfig.firestoreDatabaseId)
   : getFirestore(app);
+
+// Initialize Firebase Cloud Storage for secure user-scoped image persistence
+export const storage: FirebaseStorage = getStorage(
+  app,
+  firebaseConfig.storageBucket ? `gs://${firebaseConfig.storageBucket}` : undefined
+);
 
 // Strict Undefined-Stripping Utility (Zero-Crash Payload Hygiene)
 export function sanitizeForFirestore<T>(obj: T): T {

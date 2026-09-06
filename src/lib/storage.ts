@@ -27,9 +27,50 @@ export async function saveReflection(entry: ReflectionEntry): Promise<void> {
 
   const docRef = doc(db, "users", entry.userId, "reflections", entry.id);
 
+  // Strict Photo Metadata Hygiene:
+  // Enforce zero raw bytes, zero base64, zero blob URLs in Firestore.
+  // Store ONLY lightweight references and metadata in Firestore documents.
+  const sanitizedPhotos = (entry.photos || []).map((photo) => {
+    const isBlobUrl = photo.previewUrl?.startsWith("blob:") || false;
+    const isDataUri = photo.previewUrl?.startsWith("data:") || false;
+
+    // Use durable HTTPS download URL for preview, or omit if it was a temporary blob
+    const safePreviewUrl = photo.downloadUrl
+      ? photo.downloadUrl
+      : !isBlobUrl && !isDataUri
+      ? photo.previewUrl
+      : undefined;
+
+    return {
+      id: photo.id,
+      name: photo.name,
+      fileName: photo.fileName || photo.name,
+      storagePath: photo.storagePath || undefined,
+      downloadUrl: photo.downloadUrl || undefined,
+      previewUrl: safePreviewUrl || undefined,
+      contentType: photo.contentType || undefined,
+      fileSize: photo.fileSize || undefined,
+      uploadedAt: photo.uploadedAt || undefined,
+      source: photo.source || "cloud_storage",
+      addedAt: photo.addedAt || Date.now(),
+    };
+  });
+
+  // Strict Location Hygiene:
+  // Store only placeName, latitude, longitude if present; or null if cleared
+  const sanitizedLocation = entry.location && entry.location.placeName?.trim()
+    ? {
+        placeName: entry.location.placeName.trim(),
+        latitude: typeof entry.location.latitude === "number" ? entry.location.latitude : null,
+        longitude: typeof entry.location.longitude === "number" ? entry.location.longitude : null,
+      }
+    : null;
+
   // Guarantee undefined values are strictly removed before passing to Firestore
   const sanitized = sanitizeForFirestore<ReflectionEntry>({
     ...entry,
+    photos: sanitizedPhotos,
+    location: sanitizedLocation,
     updatedAt: Date.now(),
   });
 
@@ -78,6 +119,12 @@ export async function deleteReflection(
   if (!userId || !reflectionId) {
     throw new Error("Both userId and reflectionId are required for deletion.");
   }
-  const docRef = doc(db, "users", userId, "reflections", reflectionId);
-  await deleteDoc(docRef);
+  const path = `users/${userId}/reflections/${reflectionId}`;
+  try {
+    const docRef = doc(db, "users", userId, "reflections", reflectionId);
+    await deleteDoc(docRef);
+  } catch (error: any) {
+    console.error(`Firestore deletion failed for path ${path}:`, error);
+    throw new Error(error?.message || "Failed to delete reflection from database.");
+  }
 }

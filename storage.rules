@@ -1,0 +1,30 @@
+rules_version = '2';
+
+// Firebase Cloud Storage Security Rules for ReflectAI
+service firebase.storage {
+  match /b/{bucket}/o {
+    
+    // Zero Insecure Defaults: Deny all unauthenticated or unmatched access
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+
+    // Authenticated User-Scoped Reflection Photos
+    // Path schema: users/{userId}/reflections/{reflectionId}/photos/{photoId}
+    match /users/{userId}/reflections/{reflectionId}/photos/{photoId} {
+      
+      // Only the authenticated owner may read their private reflection photos
+      allow read: if request.auth != null && request.auth.uid == userId;
+
+      // Only the authenticated owner may upload photos
+      // Enforces maximum file size of 15MB and valid image MIME type
+      allow write: if request.auth != null
+                   && request.auth.uid == userId
+                   && request.resource.size < 15 * 1024 * 1024
+                   && request.resource.contentType.matches('image/.*');
+
+      // Only the authenticated owner may delete their photos
+      allow delete: if request.auth != null && request.auth.uid == userId;
+    }
+  }
+}
