@@ -67,7 +67,7 @@ Turn journal content and photos into visual memory cards displayed through a car
 
 ReflectAI works across desktop, tablet, and mobile devices and supports an installable PWA experience.
 
-###🔐 Private by Design
+### 🔐 Private by Design
 
 Journal entries, interactions, and photos are scoped to the authenticated Firebase user. Users cannot access another user's private journal data.
 
@@ -298,18 +298,6 @@ Current deployment:
 Service: reflectai
 Region: us-west1
 
-## 🏷️ Challenge Verification Label
-
-The Cloud Run service includes the required challenge verification label:
-
-dev-tutorial=cloud-run-ai-challenge
-
-It can be applied with:
-
-gcloud run services update reflectai   --update-labels=dev-tutorial=cloud-run-ai-challenge   --region=us-west1
-
-This label is required for automated verification of the Cloud Run deployment.
-
 ## 🤖 Gemini & AI Features
 
 ReflectAI uses Google's Gemini models through the @google/genai SDK.
@@ -370,55 +358,6 @@ A new developer can reproduce the application by following these steps:
 11. Configure Secret Manager for production
         ↓
 12. Deploy to Cloud Run
-
-## 🌟 What Makes ReflectAI Different
-
-The original journal experience provides the foundation for ReflectAI, but the project extends it into a broader reflection and memory platform.
-
-The major custom additions include:
-
-AI Reflection Companion
-
-Structured AI Insights
-
-Ask ReflectAI across personal journal history
-
-Photo memories
-
-Location-aware reflections
-
-Visual memory carousel
-
-Downloadable memory cards
-
-Responsive PWA experience
-
-User-scoped Firebase Cloud Storage
-
-Server-side Gemini credential protection
-
-AI model fallback handling
-
-The goal is to make journaling more than simply recording what happened — ReflectAI helps users revisit, understand, and discover meaning in their experiences.
-
-🛠️ Google AI Studio & Google Cloud
-
-ReflectAI was developed using Google AI Studio for building and integrating the Gemini-powered experience.
-
-The application combines:
-
-Google Gemini
-
-Firebase Authentication
-
-Cloud Firestore
-
-Firebase Cloud Storage
-
-Google Cloud Run
-
-Google Cloud Secret Manager
-
 
 ## 🌱 The Idea
 
