@@ -25,7 +25,7 @@ ReflectAI is a private, AI-powered journaling and reflection application that co
 
 Instead of simply storing journal entries, ReflectAI helps users write about their experiences, reflect on them, discover patterns across their journal, and turn meaningful moments into visual memories.
 
-🌷 Live Application
+## 🚀 Live Application
 
 Live Demo:
 https://reflectai-app.ai.studio/
@@ -33,45 +33,45 @@ https://reflectai-app.ai.studio/
 Cloud Run Deployment:
 https://reflectai-717152489335.us-west1.run.app
 
-💫 Key Features
+## 💫 Key Features
 
-✍️ Write & Reflect
+### ✍️ Write & Reflect
 
 Create private journal entries and capture thoughts, experiences, and memories in a simple journaling interface.
 
-🤖 Gemini Reflection Companion
+### 🤖 Gemini Reflection Companion
 
 Continue a meaningful conversation around a journal entry using Gemini. Users can ask questions, explore their thoughts, and gain a different perspective.
 
-✨ AI Insights
+### ✨ AI Insights
 
 Generate structured AI-powered insights from an individual reflection, including themes, emotions, observations, and perspectives.
 
-🔎 Ask ReflectAI
+### 🔎 Ask ReflectAI
 
 Ask questions across your own saved reflections to discover recurring themes, patterns, and insights over time.
 
-📸 Add Photos
+### 📸 Add Photos
 
 Attach photos directly to journal entries to preserve the visual side of a memory.
 
-📍 Remember the Place
+###📍 Remember the Place
 
 Add a meaningful location to a reflection and connect an experience with where it happened.
 
-🖼️ Share the Memories
+### 🖼️ Share the Memories
 
 Turn journal content and photos into visual memory cards displayed through a carousel. Users can revisit, download, and share their memories.
 
-📱 Responsive & Installable
+###📱 Responsive & Installable
 
 ReflectAI works across desktop, tablet, and mobile devices and supports an installable PWA experience.
 
-🔐 Private by Design
+###🔐 Private by Design
 
 Journal entries, interactions, and photos are scoped to the authenticated Firebase user. Users cannot access another user's private journal data.
 
-🏗️ Architecture & Technology Stack
+##🏗️ Architecture & Technology Stack
 
 Component
 
@@ -133,7 +133,7 @@ Google AI Studio
 
 Application development and Gemini integration
 
-🔄 Application Flow
+## 🔄 Application Flow
 
 User
  │
@@ -159,7 +159,7 @@ Express Backend
 
 The Gemini API key is handled server-side and is not exposed to the browser.
 
-🔐 Security & Data Isolation
+## 🔐 Security & Data Isolation
 
 ReflectAI uses authenticated, user-scoped access for personal journal data.
 
@@ -178,7 +178,7 @@ The application does not query all users' private journal data and filter it on 
 
 Gemini requests are handled through the server-side backend so the Gemini API credential is not exposed in frontend code.
 
-☁️ Firestore Security Rules
+## ☁️ Firestore Security Rules
 
 Create a firestore.rules file:
 
@@ -213,7 +213,7 @@ Deploy the rules:
 
 firebase deploy --only firestore:rules
 
-🖼️ Firebase Cloud Storage Security Rules
+## 🖼️ Firebase Cloud Storage Security Rules
 
 Create a storage.rules file:
 
@@ -246,7 +246,7 @@ Deploy:
 
 firebase deploy --only storage
 
-⚙️ Configuration & Reproduction
+## ⚙️ Configuration & Reproduction
 
 1. Prerequisites
 
@@ -302,7 +302,7 @@ Firebase Console
 → Sign-in providers
 → Google
 
-🔑 Gemini API Configuration
+## 🔑 Gemini API Configuration
 
 The Gemini API key must not be placed directly into frontend code.
 
@@ -314,7 +314,7 @@ The .env file should remain local and must not be committed to GitHub.
 
 The repository includes an .env.example file containing placeholders.
 
-🛡️ Production Secret Management
+## 🛡️ Production Secret Management
 
 For production deployment, store the Gemini API key in Google Cloud Secret Manager.
 
@@ -332,7 +332,7 @@ PROJECT_NUMBER=$(gcloud projects describe   $(gcloud config get-value project)  
 
 gcloud secrets add-iam-policy-binding GEMINI_API_KEY   --member="serviceAccount:${PROJECT_NUMBER}-compute@developer.gserviceaccount.com"   --role="roles/secretmanager.secretAccessor"
 
-💻 Local Development
+## 💻 Local Development
 
 Start the application:
 
@@ -360,7 +360,7 @@ Current deployment:
 Service: reflectai
 Region: us-west1
 
-🏷️ Challenge Verification Label
+## 🏷️ Challenge Verification Label
 
 The Cloud Run service includes the required challenge verification label:
 
@@ -372,7 +372,7 @@ gcloud run services update reflectai   --update-labels=dev-tutorial=cloud-run-ai
 
 This label is required for automated verification of the Cloud Run deployment.
 
-🤖 Gemini & AI Features
+## 🤖 Gemini & AI Features
 
 ReflectAI uses Google's Gemini models through the @google/genai SDK.
 
@@ -392,7 +392,7 @@ Allows authenticated users to ask questions across their own saved reflections.
 
 User data is scoped before being supplied to AI processing. ReflectAI does not intentionally send another user's private journal data to Gemini.
 
-🧠 AI Model Resilience
+## 🧠 AI Model Resilience
 
 The backend includes a fallback strategy for model availability and transient API failures.
 
@@ -433,7 +433,7 @@ A new developer can reproduce the application by following these steps:
         ↓
 12. Deploy to Cloud Run
 
-🌟 What Makes ReflectAI Different
+## 🌟 What Makes ReflectAI Different
 
 The original journal experience provides the foundation for ReflectAI, but the project extends it into a broader reflection and memory platform.
 
@@ -481,53 +481,8 @@ Google Cloud Run
 
 Google Cloud Secret Manager
 
-🎬 Project Demonstration
 
-A video walkthrough demonstrates the complete ReflectAI experience, including:
-
-Google Sign-In
-
-Creating a journal
-
-Gemini AI Companion
-
-AI Insights
-
-Adding photos and locations
-
-Dashboard and journal history
-
-Ask ReflectAI
-
-Memory carousel and sharing
-
-Responsive/mobile journaling
-
-Production application experience
-
-Live Application:
-https://reflectai-app.ai.studio/
-
-📌 Challenge Submission
-
-Project: ReflectAI
-Tagline: Write. Reflect. Grow.
-Platform: Google Gen AI Academy APAC Edition — Cohort 3
-Deployment: Google Cloud Run
-AI: Google Gemini
-Authentication: Firebase Authentication
-Database: Cloud Firestore
-Storage: Firebase Cloud Storage
-
-Challenge Label:
-
-dev-tutorial=cloud-run-ai-challenge
-
-Hashtag:
-
-#AccelerateAIwithCloudRun
-
-🌱 The Idea
+## 🌱 The Idea
 
 ReflectAI is built around a simple thought:
 
